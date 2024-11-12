@@ -4,7 +4,7 @@ function [] = FeatureValuePropagation(X,GraphNumber,Abnormal_number,ADLabels,Lab
 for i=1:GraphNumber
     fileName = ['A_test_SuiJiLink_' num2str(i)  '.txt']; % result from GG_RandomLink.m
     A=load(fileName); 
-    tic
+    %tic measure in demo instead
     Z=X*A; % get some features from X based on the random Link
     test=sum(X); % 1 x m = all features combined to one
     test_demo=sum(Z); % all features of k neighbors and xi combined to one
@@ -16,7 +16,7 @@ for ii=1:n % for each data point
     Nk=find(A(:,ii)~=0); % k+1 values of a point and neighbors
     OF(ii,:)=sum(abs(ChangeRate(ii,:)-ChangeRate(Nk,:))); % sum of (fluc xi - flux neighbors)
 end
-toc
+%toc measure in demo instead
 
 [value_outlier,index_outlier]=sort(OF); % default ascending
 auc = Measure_AUC(OF, ADLabels);
@@ -24,8 +24,8 @@ fprintf('AUC= %8.5f\n',auc*100);
 
 
  %performance metric
-ODA_AbnormalObject_Number=index_outlier(n-Abnormal_number+1:end,:); %last Abnorm number
-ODA_NormalObject_Number=index_outlier(1:n-Abnormal_number,:); %the rest
+ODA_AbnormalObject_Number=index_outlier(n-Abnormal_number+1:end,:); %last Abnorm number are abnormal
+ODA_NormalObject_Number=index_outlier(1:n-Abnormal_number,:); %the rest is normal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
