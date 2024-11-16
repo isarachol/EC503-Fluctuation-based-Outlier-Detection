@@ -5,7 +5,7 @@ graph_directory = 'C:\Users\tandi\OneDrive\Desktop\Classes\2024 Fall\EC 503 A1 B
 cd(dataset_directory);
 %% load data
 file_name = 'PNDB.mat';
-n_max = 1000;
+n_max = 100;
 tic
 X = load(file_name).Dataset;
 [n, ~] = size(X);

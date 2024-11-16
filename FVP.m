@@ -30,7 +30,7 @@ ODA_NormalObject_Number=index_outlier(1:n-Abnormal_number,:); %the rest is norma
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-[Real_NormalObject_Number,Real_Normal]=find(Label==0);
+[Real_NormalObject_Number,Real_Normal]=find(Label==0); % labels 0 are negative samples (outliers)
 [Real_AbnormalObject_Number,Real_Abnormal]=find(Label==1);
 
 % T for true (correct), F for fault
