@@ -1,5 +1,5 @@
 % Perform FVP and Find Outliers Factors
-function [] = FeatureValuePropagation(X,GraphNumber,Abnormal_number,ADLabels,Label,k)
+function [value_outlier,index_outlier] = FeatureValuePropagation(X,GraphNumber,Abnormal_number,ADLabels,Label,k)
 [m,n]=size(X); %m = dimensions, n = number of points
 for i=1:GraphNumber
     fileName = ['A_test_SuiJiLink_' num2str(i)  '.txt']; % result from GG_RandomLink.m
