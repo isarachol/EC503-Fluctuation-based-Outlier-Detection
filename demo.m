@@ -6,8 +6,8 @@ dataset_directory = 'C:\Users\tandi\OneDrive\Desktop\Classes\2024 Fall\EC 503 A1
 graph_directory = 'C:\Users\tandi\OneDrive\Desktop\Classes\2024 Fall\EC 503 A1 B1(recite)\Project\Graph\';
 cd(dataset_directory);
 %% load data
-file_name = 'PNDB.mat';
-label_name = 'PNDB_labels.mat';
+file_name = 'PNDB1.mat';
+label_name = 'PNDB1_labels.mat';
 n_max = 300;
 tic
 load(file_name);  % Dataset
