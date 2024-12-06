@@ -1,4 +1,4 @@
-function [value_outlier,index_outlier,OF, X_filtered, y_filtered] = FBOD(X,y,GraphNumber,k, prefix, Abnormal_number)
+function [value_outlier,index_outlier,OF] = FBOD(X,GraphNumber,k, prefix)
     GG_RandomLink(X,GraphNumber,k, prefix); % save txt files to \Graph
     [value_outlier,index_outlier,OF] = FVP(X',GraphNumber, prefix);
 

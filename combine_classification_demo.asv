@@ -23,8 +23,8 @@ X = load(file_name).Dataset;  % Dataset
 y = load(label_name).Labels; % Labels
 [n, dim] = size(X);
 X_combined = [X,y];
-y1=0;
-y2=1;
+y0=0;
+y1=1;
 
 %% Partition training and testing datasets
 train_ratio = 0.8; % 80% is for training
@@ -35,7 +35,6 @@ X_1 = X_combined(y==1, :);
 n_train_y0 = ceil(n_y0*train_ratio);
 n_train_y1 = ceil(n_y1*train_ratio);
 n_train = n_train_y0 + n_train_y1;
-n_test = n-n_train;
 
 index_y0 = randperm(n_y0);
 index_y1 = randperm(n_y1);
@@ -71,10 +70,10 @@ delete *.txt
 
 %% Train SVM
 disp("Results for raw dataset");
-[theta, y_train_pred, COST, CCR_train, iteration_x] = Train_SSGD_SVM(X_train, y_train, y1, y2);
+[theta, y_train_pred, COST, CCR_train, iteration_x] = Train_SSGD_SVM(X_train, y_train, y0, y1);
 disp('CCR: '), disp(CCR_train(end)),
 disp("Results for filtered dataset (filtered out " + num2str(Abnormal_number_train) + " points)");
-[theta_f, y_f_train_pred, COST_f, CCR_f_train, iteration_f_x] = Train_SSGD_SVM(X_filtered, y_filtered, y1, y2);
+[theta_f, y_f_train_pred, COST_f, CCR_f_train, iteration_f_x] = Train_SSGD_SVM(X_filtered, y_filtered, y0, y1);
 disp('CCR: '), disp(CCR_f_train(end)),
 
 %% Validation of Abnormal_number on training dataset
@@ -83,7 +82,7 @@ CCR_best = CCR_train(end);
 CCR_cross = [];
 theta_f_best = theta;
 for i=1:10:floor(n_train/2)
-    [X_f_best, y_f_best] = filter_outliers(X_train, y_train, index_outlier, i);
+    [X_f_best, y_f_best] = filter_outliers(X_combined_train, y_train, index_outlier, i);
     [theta_f_cross, ~, ~, CCR_f_best, ~] = Train_SSGD_SVM(X_f_best, y_f_best, 0, 1);
     CCR = CCR_f_best(end);
     CCR_cross = [CCR_cross, CCR];
@@ -117,24 +116,11 @@ X_raw_test_ext = [X_raw_TEST,ones(length(X_raw_TEST),1)];
 
 condition_test = double((X_raw_test_ext*theta).*Y_raw_TEST>0);
 ccr_test = 1/length(X_raw_test_ext)*sum(condition_test);
-disp("Testing CCR (raw): " + num2str(ccr_test));
-
-% filtered 20% teting data
-X_fil_TEST = [X_test_filtered(y_test_filtered==y1,:);X_test_filtered(y_test_filtered==y2,:)];
-Y_fil_TEST = [-1*ones(length(X_test_filtered(y_test_filtered==y1,:)),1);+1*ones(length(X_test_filtered(y_test_filtered==y2,:)),1)];
-X_fil_test_ext = [X_fil_TEST,ones(length(X_fil_TEST),1)];
-
-condition_test = double((X_fil_test_ext*theta_f).*Y_fil_TEST>0);
-ccr_fil_test = 1/length(X_fil_test_ext)*sum(condition_test);
-disp("Testing CCR (filtered): " + num2str(ccr_fil_test));
+sign_test = X_raw_test_ext*theta;
+y_test_pred = ones(length(sign_test), 1);
+y_test_pred(sign_test<0) = -1;
+CCR_test = [CCR_test, ccr_test];
 
 % filtered teting data
-X_fil_TEST = [X_test_filtered(y_test_filtered==y1,:);X_test_filtered(y_test_filtered==y2,:)];
-Y_fil_TEST = [-1*ones(length(X_test_filtered(y_test_filtered==y1,:)),1);+1*ones(length(X_test_filtered(y_test_filtered==y2,:)),1)];
-X_fil_test_ext = [X_fil_TEST,ones(length(X_fil_TEST),1)];
-
-condition_test = double((X_fil_test_ext*theta_f_best).*Y_fil_TEST>0);
-ccr_fil_test = 1/length(X_fil_test_ext)*sum(condition_test);
-disp("Testing CCR (filtered best): " + num2str(ccr_fil_test));
 
 % end
