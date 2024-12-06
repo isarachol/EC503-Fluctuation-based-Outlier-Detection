@@ -7,3 +7,9 @@ Outlier detection is an important topic in machine learning and has been used in
 Original source code from https://github.com/FluctuationOD/Fluctuation-based-Outlier-Detection, which was presented in the paper https://doi.org/10.1038/s41598-023-29549-1
 - edited demo, random link, and FVP functions for different paths
 - added a function for extracting numerical data from csv files
+
+## Dataset sources
+- PNDB: https://www.kaggle.com/datasets/slmsshk/pndm-prediction-dataset
+
+## Processed datasets
+- PNDB: https://drive.google.com/drive/folders/1SfOq_HghITev13HQcJK_GrrmmbxjxWh0?usp=sharing
