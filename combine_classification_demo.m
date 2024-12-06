@@ -14,10 +14,10 @@ graph_directory = 'C:\Users\tandi\OneDrive\Desktop\Classes\2024 Fall\EC 503 A1 B
 cd(dataset_directory);
 
 %% load data
-dataset_num = 73;
+dataset_num = 70;
 file_name = dataset_name + num2str(dataset_num) + ".mat";
 label_name =  dataset_name + num2str(dataset_num) + "_labels.mat";
-n_max = 300;
+n_max = 500;
 % tic
 X = load(file_name).Dataset;  % Dataset
 y = load(label_name).Labels; % Labels
@@ -37,16 +37,15 @@ fprintf("Using %d data points\n", n);
 % hyper parameter
 GraphNumber=10; % # of graphs
 k=60; % # of neighbors
-Abnormal_number=ceil(n*0.2); %abnormal number (how to select this number?) next line --> ADLabels=y;
+Abnormal_number=ceil(n*0.2); %abnormal number (how to select this number?)
+% ADLabels=y;
 cd (graph_directory)
 delete *.txt
 
 % no class separation
 % GG_RandomLink(X_combined,GraphNumber,k, 'test_PNDB_'); % save txt files to \Graph
 [value_outlier,index_outlier,OF] = FBOD(X_combined,y,GraphNumber,k, 'test_PNDB_');
-figure()
-plot(1:n, value_outlier)
-title("Outlier Factors in Ascending Order");
+
 %% Evaluating performance
 % auc = EvaluatePerformance(OF,Abnormal_number,ADLabels,y,index_outlier);
 
@@ -80,8 +79,14 @@ disp("Results for best filtered dataset (filtered out " + num2str(best_abnor_num
 disp('CCR: '), disp(CCR_best),
 
 figure()
+subplot(1,2,1)
+plot(1:n, value_outlier)
+title("Outlier Factors in Ascending Order #" + num2str(dataset_num));
+xlabel("Data point (point 1 - point n)");
+ylabel("Outlier factor");
+subplot(1,2,2)
 plot(1:10:floor(n_max/2), CCR_cross)
-title("CCR as number of (outlier) elimination changes")
+title("CCR as number of (outlier) elimination changes #" + num2str(dataset_num))
 xlabel("Number of outlier eliminations");
 ylabel("CCR");
 
