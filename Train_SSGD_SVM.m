@@ -10,7 +10,7 @@ X_2 = X_train(Y_train==y2,:);
 
 X_in = [X_1;X_2];
 Y_in = [-1*ones(size(X_1,1),1);+1*ones(size(X_2,1),1)];
-X_in_ext = [X_in,ones(length(X_in),1)];
+X_in_ext = [X_in,ones(size(X_in, 1),1)];
 
 
 % X_f1f2_TEST = [X_test(Y_test==y1,:);X_test(Y_test==y2,:)];
@@ -34,7 +34,7 @@ for iii = 1:t_max
     t = iii; 
 
     % choose sample index:
-    j_current = randi([1,length(X_in)]);
+    j_current = randi([1,size(X_in, 1)]);
     x_current = X_in(j_current,:);
     x_current_ext = [x_current';1];
     y_current = Y_in(j_current);
@@ -42,7 +42,7 @@ for iii = 1:t_max
     % compute subgradient:
     v = [w;0];
     if y_current*theta'*x_current_ext < 1
-        v = v - length(X_in)*c*y_current*x_current_ext;
+        v = v - size(X_in, 1)*c*y_current*x_current_ext;
     end
 
     % update parameters:
@@ -61,10 +61,10 @@ for iii = 1:t_max
         % Cost function:
         condition_train = double((X_in_ext*theta).*Y_in>0);
         cost = 1/2*norm(w)^2 + c*sum(max(0, 1-condition_train));
-        COST = [COST, cost/length(X_in)];
+        COST = [COST, cost/size(X_in, 1)];
 
         % Training CCR:
-        ccr_train = 1/length(X_in)*sum(condition_train);
+        ccr_train = 1/size(X_in, 1)*sum(condition_train);
         sign_train = X_in_ext*theta;
         y_train_pred = ones(length(sign_train), 1);
         y_train_pred(sign_train<0) = -1;
