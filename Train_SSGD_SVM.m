@@ -1,3 +1,4 @@
+%% Modified from homework 6
 % Perform stochastic sub-gradient descend on SVM algorithm
 % inputs: training data, testing data, two labels of interest
 % outputs: theta, y_predictions for training andn testing data
