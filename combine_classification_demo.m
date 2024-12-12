@@ -58,7 +58,7 @@ fprintf("Using %d training data points and %d testing data points\n", ...
 
 %% Adding outliers to Training set
 num_outliers = 200;
-outlier_X = rand(num_outliers, 7) * 100 - rand(num_outliers, 7) * 100; % [-100, 100]randomly generate
+outlier_X = rand(num_outliers, 7) * 10; %- rand(num_outliers, 7) * 100; % [-100, 100]randomly generate
 outlier_y = randi([0, 1], [num_outliers,1]); % label = 1 for outliers
 X_train = [X_train; outlier_X];
 y_train = [y_train; outlier_y];
@@ -127,7 +127,7 @@ title("Outlier Factors in Ascending Order #" + num2str(dataset_num));
 xlabel("Data point (point 1 - point n)");
 ylabel("Outlier factor");
 subplot(1,2,2)
-plot(linspace(max_threshold, min_threshold, 30), CCR_cross)
+plot(linspace(max_threshold, min_threshold,  30), CCR_cross)
 title("CCR as threshold decreases #" + num2str(dataset_num))
 xlabel("threshold");
 ylabel("CCR");

@@ -3,6 +3,8 @@ This repositiory is used to store source code used for a project in EC503 at BU.
 Contributors: Isara Cholaseuk, Jinyu Huang, Shuhao Jiang
 Link to our repository: https://github.com/isarachol/EC503-Fluctuation-based-Outlier-Detection
 
+Most of our study is conducted in combine_classification_demo.m script file, which requires modification of workspace on the first few lines. To replicate our studies, change the directory for datasets in the combine_classification_demo.m and change the directory for random graphs in both combine_classification_demo.m and GG_RandomLink.m.
+
 ## Original source code and algorithm
 This repository is forked from https://github.com/FluctuationOD/Fluctuation-based-Outlier-Detection, which was presented in the paper https://doi.org/10.1038/s41598-023-29549-1
 
@@ -29,6 +31,7 @@ The FBOD method is an outlier detection method that calculates the value called 
 - FBOD.m: calls GG_Randomlink.m and FVP.m
 - filter_outliers: separate outliers from normal dataset using outlier factor threshold.
 - Train_SSGD_SVM.m: performs stochastic sub-gradient descent to implement SVM and find the best hyperplane that classify two classes
+- Test_SSGD_SVM.m: Implement the theta of the training model to our pair-labels SVM classifier to predict the label of the test dataset and calculate the corresponding CCR.
 
 ## Datasets
 - PNDB (7 features, 2 classes): https://www.kaggle.com/datasets/slmsshk/pndm-prediction-dataset

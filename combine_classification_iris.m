@@ -76,7 +76,7 @@ y_test = y_test(1:30);
 
 %% Adding outliers to Training set
 num_outliers = 30;
-outlier_X = rand(num_outliers, dim) * 30 - rand(num_outliers, dim) * 30; % [-100, 100]randomly generate
+outlier_X = rand(num_outliers, dim) * 7 - rand(num_outliers, dim) * 7; % [-100, 100]randomly generate
 outlier_y = randi([0, 1], [num_outliers,1]); % label = 1 for outliers
 X_train = [X_train; outlier_X];
 y_train = [y_train; outlier_y];
@@ -119,7 +119,7 @@ CCR_best = CCR_train(end);
 CCR_cross = [];
 theta_f_best = theta;
 Abnormal_number_best = 0;
-for i=linspace(max_threshold, min_threshold, 30) % 30 validation points
+for i=linspace(max_threshold, min_threshold, 20) % 30 validation points
     [X_f_best, y_f_best, ~, Abnormal_number] = filter_outliers(X_train, y_train, value_outlier, index_outlier, i);
     [theta_f_cross, ~, ~, CCR_f_best, ~] = Train_SSGD_SVM(X_f_best, y_f_best, y1, y2);
     CCR = CCR_f_best(end);
@@ -146,7 +146,7 @@ title("Outlier Factors in Ascending Order #" + dataset_name);
 xlabel("Data point (point 1 - point n)");
 ylabel("Outlier factor");
 subplot(1,2,2)
-plot(linspace(max_threshold, min_threshold, 30), CCR_cross)
+plot(linspace(max_threshold, min_threshold, 20), CCR_cross)
 title("CCR as threshold decreases #" + dataset_name)
 xlabel("threshold");
 ylabel("CCR");
